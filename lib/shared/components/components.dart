@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:todo_app/shared/cubit/cubit.dart';
 // ignore_for_file:prefer_const_constructors
 
 Widget defaultButton({
@@ -70,7 +71,7 @@ Widget defaultFormField({
       ),
     );
 
-Widget bulidTasksItem(Map model) => Padding(
+Widget bulidTasksItem(Map model, context) => Padding(
       padding: const EdgeInsets.all(20.0),
       child: Row(
         children: [
@@ -83,33 +84,57 @@ Widget bulidTasksItem(Map model) => Padding(
               ),
             ),
           ),
-          SizedBox(
-            width: 10.0,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              Text(
-                '${model['title']}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
+          SizedBox(width: 10.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                Text(
+                  '${model['title']}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Text(
-                '${model['date']}',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 20.0,
+                SizedBox(
+                  height: 10.0,
                 ),
-              ),
-            ],
+                Text(
+                  '${model['date']}',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ],
+            ),
           ),
+          SizedBox(width: 10.0),
+          IconButton(
+              onPressed: () {
+                AppCubit.get(context).updateData(
+                  status: 'done',
+                  id: model['id'],
+                );
+              },
+              icon: Icon(
+                Icons.check_box,
+                color: Colors.green,
+              )),
+          SizedBox(width: 5.0),
+          IconButton(
+              onPressed: () {
+                AppCubit.get(context).updateData(
+                  status: 'archived',
+                  id: model['id'],
+                );
+              },
+              icon: Icon(
+                Icons.archive_outlined,
+                color: Colors.red,
+              )),
         ],
       ),
     );
