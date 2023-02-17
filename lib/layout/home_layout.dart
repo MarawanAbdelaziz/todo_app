@@ -33,8 +33,6 @@ class _HomeLayoutState extends State<HomeLayout> {
   late Database database;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   var formkey = GlobalKey<FormState>();
-  IconData fabicon = Icons.edit;
-
   var titleController = TextEditingController();
   var dateController = TextEditingController();
   var timeController = TextEditingController();
